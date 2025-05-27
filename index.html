@@ -24,15 +24,19 @@
     .buttons {
       display: flex;
       gap: 20px;
+      width: 100%;
+      max-width: 400px;
+      justify-content: center;
     }
     button {
       padding: 15px 30px;
-      font-size: 1rem;
+      font-size: 1rem; /* Başlangıç font büyüklüğü */
       border: none;
       border-radius: 8px;
       cursor: pointer;
       color: white;
-      transition: background-color 0.3s, font-size 0.3s;
+      transition: background-color 0.3s, font-size 0.3s, flex-grow 0.3s;
+      flex-grow: 1; /* Butonlar başlangıçta eşit genişlikte */
     }
     .yes {
       background-color: #4caf50;
@@ -71,7 +75,6 @@
     let clickCount = 0;
     const noBtn = document.getElementById('noBtn');
     const yesBtn = document.getElementById('yesBtn');
-    const heading = document.querySelector('h1');
     const buttonsDiv = document.querySelector('.buttons');
 
     function showFinalMessage() {
@@ -84,16 +87,14 @@
     noBtn.addEventListener('click', () => {
       if (clickCount < noMessages.length - 1) {
         clickCount++;
-        // Buton yazısını değiştir
         noBtn.textContent = noMessages[clickCount];
-        // Evet butonu büyüsün, hayır küçülsün ve daha fazla yer kaplasın
+        // Evet büyür, Hayır küçülür, genişlik değişimi dengeli
         yesBtn.style.fontSize = `${1 + clickCount * 0.3}rem`;
-        yesBtn.style.flexGrow = 1 + clickCount;  // genişlik artışı
+        yesBtn.style.flexGrow = 1 + clickCount;
         noBtn.style.fontSize = `${1 - clickCount * 0.1}rem`;
-        noBtn.style.flexGrow = 1; // hayır küçülsün ama yer değiştirmesin
+        noBtn.style.flexGrow = 1 - clickCount * 0.1 > 0 ? 1 - clickCount * 0.1 : 0.1; // küçülme ama 0'dan küçük olmasın
       } else if (clickCount === noMessages.length - 1) {
-        // 9. tıklamada sadece evet butonu kalsın
-        buttonsDiv.innerHTML = `<button id="finalYesBtn" class="yes" style="font-size: 5rem; padding: 50px 100px; width: 100%;" >Evet</button>`;
+        buttonsDiv.innerHTML = `<button id="finalYesBtn" class="yes" style="font-size: 5rem; padding: 50px 100px; width: 100%;">Evet</button>`;
         const finalYesBtn = document.getElementById('finalYesBtn');
         finalYesBtn.addEventListener('click', showFinalMessage);
         clickCount++;
