@@ -10,13 +10,11 @@
       flex-direction: column;
       justify-content: center;
       align-items: center;
-      min-height: 100vh;
+      height: 100vh;
       margin: 0;
       background-color: #f9f9f9;
       font-family: Arial, sans-serif;
       text-align: center;
-      transition: padding 0.3s;
-      padding: 20px; /* Başlangıç padding */
     }
     h1 {
       font-size: 2rem;
@@ -26,7 +24,6 @@
     .buttons {
       display: flex;
       gap: 20px;
-      transition: gap 0.3s;
     }
     button {
       padding: 15px 30px;
@@ -35,8 +32,7 @@
       border-radius: 8px;
       cursor: pointer;
       color: white;
-      transition: background-color 0.3s, font-size 0.3s, padding 0.3s;
-      white-space: nowrap;
+      transition: background-color 0.3s, font-size 0.3s;
     }
     .yes {
       background-color: #4caf50;
@@ -50,24 +46,17 @@
     .no:hover {
       background-color: #da190b;
     }
-    #finalMessage img {
-      margin-top: 20px;
-      width: 250px;
-      max-width: 90vw;
-      border-radius: 10px;
-    }
   </style>
 </head>
 <body>
-  <h1 id="message">Seni üzdüğüm için özür dilerim, barışalım mı?</h1>
-  <div class="buttons" id="buttons">
-    <button id="yesBtn" class="yes">Evet</button>
+  <h1>Seni üzdüğüm için özür dilerim, barışalım mı?</h1>
+  <div class="buttons">
+    <button id="yesBtn" class="yes" onclick="alert('Çok teşekkür ederim! ❤️')">Evet</button>
     <button id="noBtn" class="no">Hayır</button>
   </div>
 
   <script>
-    let clickCount = 0;
-    const messages = [
+    const noMessages = [
       "Hayır",
       "Emin misin ?",
       "Gerçekten emin misin ?",
@@ -79,67 +68,37 @@
       "Tamam artık sormayacağım"
     ];
 
-    const noBtn = document.getElementById("noBtn");
-    const yesBtn = document.getElementById("yesBtn");
-    const buttonsDiv = document.getElementById("buttons");
-    const message = document.getElementById("message");
-    const body = document.body;
-
-    // Başlangıç font büyüklükleri (rem)
-    let yesFontSize = 1;
-    let noFontSize = 1;
-    // Başlangıç padding ve gap
-    let bodyPadding = 20; // px
-    let buttonsGap = 20;  // px
-
-    noBtn.addEventListener("click", () => {
-      clickCount++;
-      if (clickCount < messages.length) {
-        noBtn.textContent = messages[clickCount];
-
-        // Evet büyür, hayır küçülür
-        yesFontSize += 0.4;
-        noFontSize -= 0.1;
-        if (noFontSize < 0.5) noFontSize = 0.5;
-
-        yesBtn.style.fontSize = `${yesFontSize}rem`;
-        noBtn.style.fontSize = `${noFontSize}rem`;
-
-        // Buton padding büyür (daha büyük buton)
-        let yesPaddingV = 15 + clickCount * 10; // dikey padding
-        let yesPaddingH = 30 + clickCount * 20; // yatay padding
-        yesBtn.style.padding = `${yesPaddingV}px ${yesPaddingH}px`;
-
-        // Hayır buton küçülür
-        let noPaddingV = 15 - clickCount * 1.5;
-        let noPaddingH = 30 - clickCount * 3;
-        noPaddingV = noPaddingV < 5 ? 5 : noPaddingV;
-        noPaddingH = noPaddingH < 10 ? 10 : noPaddingH;
-        noBtn.style.padding = `${noPaddingV}px ${noPaddingH}px`;
-
-        // Sayfa padding ve butonlar arası boşluk büyüsün
-        bodyPadding += 10;
-        buttonsGap += 5;
-        body.style.padding = `${bodyPadding}px`;
-        buttonsDiv.style.gap = `${buttonsGap}px`;
-      } else {
-        // Son hali: sadece büyük EVET butonu
-        message.textContent = "";
-        buttonsDiv.innerHTML = `<button class="yes" style="font-size: 7rem; padding: 70px 140px;" id="finalYesBtn">Evet</button>`;
-        document.getElementById("finalYesBtn").addEventListener("click", showFinalMessage);
-      }
-    });
-
-    yesBtn.addEventListener("click", () => {
-      alert("Evet diyeceğini biliyordum! Teşekkür ederimm <3");
-    });
+    let clickCount = 0;
+    const noBtn = document.getElementById('noBtn');
+    const yesBtn = document.getElementById('yesBtn');
+    const heading = document.querySelector('h1');
+    const buttonsDiv = document.querySelector('.buttons');
 
     function showFinalMessage() {
       document.body.innerHTML = `
-        <h1 style="font-size: 3rem; color: #4caf50;">Evet diyeceğini biliyordum! Teşekkür ederimm <3</h1>
-        <img src="https://cdn.pixabay.com/photo/2017/02/20/18/03/cats-2083492_960_720.jpg" alt="Birbirine sarılan kediler" />
+        <h1 style="font-size: 3rem; color: #4caf50;">Evet diyeceğini biliyordum! Teşekkür ederimm &lt;3</h1>
+        <img src="https://media.giphy.com/media/suThliOFxXSr6/giphy.gif" alt="Birbirine sarılan kediler" style="max-width: 80%; height: auto; margin-top: 20px;" />
       `;
     }
+
+    noBtn.addEventListener('click', () => {
+      if (clickCount < noMessages.length - 1) {
+        clickCount++;
+        // Buton yazısını değiştir
+        noBtn.textContent = noMessages[clickCount];
+        // Evet butonu büyüsün, hayır küçülsün ve daha fazla yer kaplasın
+        yesBtn.style.fontSize = `${1 + clickCount * 0.3}rem`;
+        yesBtn.style.flexGrow = 1 + clickCount;  // genişlik artışı
+        noBtn.style.fontSize = `${1 - clickCount * 0.1}rem`;
+        noBtn.style.flexGrow = 1; // hayır küçülsün ama yer değiştirmesin
+      } else if (clickCount === noMessages.length - 1) {
+        // 9. tıklamada sadece evet butonu kalsın
+        buttonsDiv.innerHTML = `<button id="finalYesBtn" class="yes" style="font-size: 5rem; padding: 50px 100px; width: 100%;" >Evet</button>`;
+        const finalYesBtn = document.getElementById('finalYesBtn');
+        finalYesBtn.addEventListener('click', showFinalMessage);
+        clickCount++;
+      }
+    });
   </script>
 </body>
 </html>
