@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="tr">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Özür Dilerim</title>
   <style>
     body {
@@ -35,7 +35,7 @@
       transition: background-color 0.3s, font-size 0.3s;
     }
     .yes {
-      background-color: #4CAF50;
+      background-color: #4caf50;
     }
     .yes:hover {
       background-color: #45a049;
@@ -45,6 +45,12 @@
     }
     .no:hover {
       background-color: #da190b;
+    }
+    #finalMessage img {
+      margin-top: 20px;
+      width: 200px;
+      max-width: 90vw;
+      border-radius: 10px;
     }
   </style>
 </head>
@@ -69,30 +75,45 @@
       "Tamam artık sormayacağım"
     ];
 
-    const noBtn = document.getElementById('noBtn');
-    const yesBtn = document.getElementById('yesBtn');
-    const buttonsDiv = document.getElementById('buttons');
-    const message = document.getElementById('message');
+    const noBtn = document.getElementById("noBtn");
+    const yesBtn = document.getElementById("yesBtn");
+    const buttonsDiv = document.getElementById("buttons");
+    const message = document.getElementById("message");
 
-    noBtn.addEventListener('click', () => {
+    // Başlangıç font büyüklükleri (rem)
+    let yesFontSize = 1;
+    let noFontSize = 1;
+
+    noBtn.addEventListener("click", () => {
       clickCount++;
       if (clickCount < messages.length) {
         noBtn.textContent = messages[clickCount];
-        yesBtn.style.fontSize = `${1 + clickCount * 0.4}rem`;
-        noBtn.style.fontSize = `${1 - clickCount * 0.08}rem`;
+
+        // Her tıklamada butonlar büyür
+        yesFontSize += 0.4;
+        noFontSize += 0.4;
+
+        yesBtn.style.fontSize = `${yesFontSize}rem`;
+        noBtn.style.fontSize = `${noFontSize}rem`;
       } else {
-        // Son hali: sadece EVET görünsün
+        // Son hali: sadece EVET butonu büyük ve merkezde
         message.textContent = "";
-        buttonsDiv.innerHTML = `<button class="yes" style="font-size: 5rem; padding: 40px 80px;" onclick="finalMessage()">Evet</button>`;
+        buttonsDiv.innerHTML = `<button class="yes" style="font-size: 6rem; padding: 50px 100px;" id="finalYesBtn">Evet</button>`;
+        document
+          .getElementById("finalYesBtn")
+          .addEventListener("click", showFinalMessage);
       }
     });
 
-    yesBtn.addEventListener('click', () => {
-      alert('Evet diyeceğini biliyordum! Teşekkür ederimm <3');
+    yesBtn.addEventListener("click", () => {
+      alert("Evet diyeceğini biliyordum! Teşekkür ederimm <3");
     });
 
-    function finalMessage() {
-      document.body.innerHTML = '<h1 style="font-size: 3rem; color: #4CAF50;">Evet diyeceğini biliyordum! Teşekkür ederimm <3</h1>';
+    function showFinalMessage() {
+      document.body.innerHTML = `
+        <h1 style="font-size: 3rem; color: #4caf50;">Evet diyeceğini biliyordum! Teşekkür ederimm <3</h1>
+        <img src="https://i.imgur.com/4AiXzf8.jpg" alt="Birbirine sarılan kediler" />
+      `;
     }
   </script>
 </body>
