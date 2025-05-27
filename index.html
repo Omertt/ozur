@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Özür Dilerim</title>
+  <style>
+    body {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+      background-color: #f9f9f9;
+      font-family: Arial, sans-serif;
+    }
+    h1 {
+      text-align: center;
+      font-size: 2rem;
+      margin-bottom: 40px;
+      color: #333;
+    }
+    .buttons {
+      display: flex;
+      gap: 20px;
+    }
+    button {
+      padding: 15px 30px;
+      font-size: 1rem;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      color: white;
+      transition: background-color 0.3s;
+    }
+    .yes {
+      background-color: #4CAF50;
+    }
+    .yes:hover {
+      background-color: #45a049;
+    }
+    .no {
+      background-color: #f44336;
+    }
+    .no:hover {
+      background-color: #da190b;
+    }
+  </style>
+</head>
+<body>
+  <h1>Seni üzdüğüm için özür dilerim, barışalım mı?</h1>
+  <div class="buttons">
+    <button class="yes" onclick="alert('Çok teşekkür ederim! ❤️')">Evet</button>
+    <button class="no" onclick="alert('Yine de kararına saygı duyuyorum. 😢')">Hayır</button>
+  </div>
+</body>
+</html>
