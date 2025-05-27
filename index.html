@@ -23,20 +23,23 @@
     }
     .buttons {
       display: flex;
-      gap: 20px;
-      width: 100%;
-      max-width: 400px;
+      gap: 30px;
+      width: 90%;        /* Sayfa genişliğini daha fazla kullanalım */
+      max-width: 600px;  /* Daha geniş container */
       justify-content: center;
     }
     button {
-      padding: 15px 30px;
-      font-size: 1rem; /* Başlangıç font büyüklüğü */
+      padding: 25px 50px; /* Daha büyük butonlar */
+      font-size: 1rem;    /* Başlangıç font büyüklüğü */
       border: none;
-      border-radius: 8px;
+      border-radius: 10px;
       cursor: pointer;
       color: white;
-      transition: background-color 0.3s, font-size 0.3s, flex-grow 0.3s;
-      flex-grow: 1; /* Butonlar başlangıçta eşit genişlikte */
+      transition: background-color 0.3s, font-size 0.3s, flex-grow 0.3s, padding 0.3s;
+      flex-grow: 1;       /* Başlangıçta eşit genişlik */
+      min-width: 100px;   /* Minimum genişlik */
+      min-height: 60px;   /* Minimum yükseklik */
+      white-space: nowrap; /* Yazının satır atlamaması için */
     }
     .yes {
       background-color: #4caf50;
@@ -88,11 +91,13 @@
       if (clickCount < noMessages.length - 1) {
         clickCount++;
         noBtn.textContent = noMessages[clickCount];
-        // Evet büyür, Hayır küçülür, genişlik değişimi dengeli
+        // Evet büyür, Hayır küçülür ama minimum değer korunsun
         yesBtn.style.fontSize = `${1 + clickCount * 0.3}rem`;
-        yesBtn.style.flexGrow = 1 + clickCount;
+        yesBtn.style.flexGrow = 1 + clickCount * 2;  // genişlik artışı hızlandırıldı
+        yesBtn.style.padding = `${25 + clickCount * 10}px  ${50 + clickCount * 20}px`;  // padding artışı
         noBtn.style.fontSize = `${1 - clickCount * 0.1}rem`;
-        noBtn.style.flexGrow = 1 - clickCount * 0.1 > 0 ? 1 - clickCount * 0.1 : 0.1; // küçülme ama 0'dan küçük olmasın
+        noBtn.style.flexGrow = 1 - clickCount * 0.1 > 0.4 ? 1 - clickCount * 0.1 : 0.4; // küçülme ama 0.4'ten küçük olmasın
+        noBtn.style.padding = `15px 30px`; // sabit bırakıyorum padding'i ki yazılar kaymasın
       } else if (clickCount === noMessages.length - 1) {
         buttonsDiv.innerHTML = `<button id="finalYesBtn" class="yes" style="font-size: 5rem; padding: 50px 100px; width: 100%;">Evet</button>`;
         const finalYesBtn = document.getElementById('finalYesBtn');
