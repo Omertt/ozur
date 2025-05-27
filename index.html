@@ -14,9 +14,9 @@
       margin: 0;
       background-color: #f9f9f9;
       font-family: Arial, sans-serif;
+      text-align: center;
     }
     h1 {
-      text-align: center;
       font-size: 2rem;
       margin-bottom: 40px;
       color: #333;
@@ -49,28 +49,51 @@
   </style>
 </head>
 <body>
-  <h1>Seni üzdüğüm için özür dilerim, barışalım mı?</h1>
-  <div class="buttons">
-    <button id="yesBtn" class="yes" onclick="alert('Çok teşekkür ederim! ❤️')">Evet</button>
+  <h1 id="message">Seni üzdüğüm için özür dilerim, barışalım mı?</h1>
+  <div class="buttons" id="buttons">
+    <button id="yesBtn" class="yes">Evet</button>
     <button id="noBtn" class="no">Hayır</button>
   </div>
 
   <script>
     let clickCount = 0;
+    const messages = [
+      "Hayır",
+      "Emin misin ?",
+      "Gerçekten emin misin ?",
+      "Tam olarak emin olduğunu söyleyebilir misin ?",
+      "Bir daha düşün lütfen!",
+      "Hayır dersen çok üzülürüm..",
+      "Gerçeketen çok üzülürüm",
+      "Çok ama çok üzülürüm...",
+      "Tamam artık sormayacağım"
+    ];
+
     const noBtn = document.getElementById('noBtn');
     const yesBtn = document.getElementById('yesBtn');
+    const buttonsDiv = document.getElementById('buttons');
+    const message = document.getElementById('message');
 
     noBtn.addEventListener('click', () => {
       clickCount++;
-      if (clickCount < 8) {
-        // Sayfayı yeniden yükle, evet butonunu büyüt, hayır küçült
-        yesBtn.style.fontSize = `${1 + clickCount * 0.2}rem`;
-        noBtn.style.fontSize = `${1 - clickCount * 0.1}rem`;
+      if (clickCount < messages.length) {
+        noBtn.textContent = messages[clickCount];
+        yesBtn.style.fontSize = `${1 + clickCount * 0.4}rem`;
+        noBtn.style.fontSize = `${1 - clickCount * 0.08}rem`;
       } else {
-        alert('Yeter bu kadar hayır 😢');
-        noBtn.disabled = true;
+        // Son hali: sadece EVET görünsün
+        message.textContent = "";
+        buttonsDiv.innerHTML = `<button class="yes" style="font-size: 5rem; padding: 40px 80px;" onclick="finalMessage()">Evet</button>`;
       }
     });
+
+    yesBtn.addEventListener('click', () => {
+      alert('Evet diyeceğini biliyordum! Teşekkür ederimm <3');
+    });
+
+    function finalMessage() {
+      document.body.innerHTML = '<h1 style="font-size: 3rem; color: #4CAF50;">Evet diyeceğini biliyordum! Teşekkür ederimm <3</h1>';
+    }
   </script>
 </body>
 </html>
